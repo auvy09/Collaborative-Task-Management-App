@@ -12,6 +12,7 @@ const Header = () => {
         <li className='font-bold text-xl'><Link to={'/dashboard'}>Dashboard</Link></li>
         <li className='font-bold text-xl'><Link to={'/login'}>Login</Link></li>
         <li className='font-bold text-xl'><Link to={'/task'}>Appoint Task</Link></li>
+        <li className='font-bold text-xl'><Link to={'/profile'}>Your Profile</Link></li>
     </>
 
     return (

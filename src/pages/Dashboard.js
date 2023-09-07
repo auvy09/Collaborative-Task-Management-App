@@ -5,12 +5,17 @@ import { collection, deleteDoc, deleteField, doc, getDocs, getFirestore, query, 
 import { db } from '../firebase/firebase.config';
 import { toast } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import { Box, Modal } from '@mui/material';
 
 
 
 
 
 const Dashboard = () => {
+    const [open, setOpen] = useState(false);
+    const handleClose = () => {
+        setOpen(false);
+    };
     const { user } = useContext(AuthContext);
     const navigate = useNavigate()
     const [task, setTask] = useState([]);
@@ -51,16 +56,20 @@ const Dashboard = () => {
         // }
 
         await deleteDoc(doc(db, 'task', id));
+        window.location.reload();
         alert("please reload the page to see updated list");
     }
 
     const handleView = (id) => {
-        // const taskSelected = task.find(item => item.id === id);
-        // setSelectedTask(taskSelected);
+        // setOpen(true);
+        const taskSelected = task.find(item => item.id === id);
+        setSelectedTask(taskSelected);
 
-        // console.log(selectedTask);
+        // console.log(selectedTask.details);
         // window.my_modal_5.showModal();
-        navigate(`/view/${id}`)
+
+        console.log(task);
+
     }
     const rows = task.map((item) => ({
         id: item.id,
@@ -68,7 +77,7 @@ const Dashboard = () => {
         title: item.title,
         subDate: item.subDate,
         details: item.details,
-        timeStamp: item.timeStamp,
+        taskMate: item.taskMate,
         delete: item.giveriD,
     }));
 
@@ -91,14 +100,13 @@ const Dashboard = () => {
 
         },
         {
-            field: 'timeStamp',
-            headerName: 'View Data',
-            renderCell: (params) => (
-                <button onClick={() => handleView(params.row.id)} className='w-22 btn btn-outline btn-info'>View </button>),
-
+            field: 'taskMate',
+            headerName: 'Task-Mate',
             width: 300,
 
+
         },
+
         {
             field: 'delete',
             headerName: 'Delete Data',
@@ -119,7 +127,7 @@ const Dashboard = () => {
                     <Link to={`/view/${item.id}`}></Link>
                 </div>
             ))} */}
-            <DataGrid
+            <DataGrid className='text-white'
                 rows={rows}
                 columns={columns}
                 initialState={{
@@ -132,19 +140,19 @@ const Dashboard = () => {
 
             />
 
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="parent-modal-title"
+                aria-describedby="parent-modal-description"
+                className="bg-base-200">
+                <Box sx={{ width: 400 }}>
+                    <h1>{ }</h1>
+                    <p>{ }</p>
 
-            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                <form method="dialog" className="modal-box">
-                    <h3 className="font-bold text-lg ">{ }</h3>
-                    <p className="py-4 font-mono">{ }</p>
-                    <p className="py-4 font-mono">Submission Date-{ }</p>
-                    <p className="py-4 font-mono"><small className='text-bottom font-semibold'>Project Assign by-{ }</small></p>
-                    <div className="modal-action">
+                </Box>
+            </Modal>
 
-                        <button className="btn">Close</button>
-                    </div>
-                </form>
-            </dialog>
 
         </div>
     );

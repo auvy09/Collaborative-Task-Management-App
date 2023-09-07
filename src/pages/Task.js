@@ -13,8 +13,9 @@ const Task = () => {
         const email = form.email.value;
         const date = form.date.value;
         const title = form.title.value;
+        const taskMate = form.taskMate.value;
         const details = form.details.value;
-        console.log(email, date, title, details);
+        console.log(email, date, title, details, taskMate);
 
         await addDoc(collection(db, "task"), {
             name: email,
@@ -23,6 +24,7 @@ const Task = () => {
 
             subDate: date,
             title: title,
+            taskMate: taskMate,
             details: details,
             timeStamp: serverTimestamp(),
 
@@ -50,6 +52,7 @@ const Task = () => {
             <textarea placeholder="Project name" name='title' className="textarea textarea-bordered textarea-md w-full max-w-xs font-mono" ></textarea>
 
             <textarea placeholder="Project details" name='details' className="textarea textarea-bordered textarea-lg w-full max-w-xs font-mono" ></textarea>
+            <textarea placeholder="Task mate" name='taskMate' className="textarea textarea-bordered textarea-md w-full max-w-xs font-mono" ></textarea>
 
             <input type="submit" className="btn btn-outline btn-primary w-56" value="Assign" />
         </form>

@@ -7,6 +7,7 @@ import Signup from "../pages/Signup";
 import Task from "../pages/Task";
 import PrivetRoute from "./PrivetRoute";
 import View from "../pages/View";
+import ProfileInfo from "../pages/ProfileInfo";
 // const currentUser = false;
 // const RequireAuth = ({ children }) => {
 //     return currentUser ? (children) : <Navigate to='/login' />
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: '/view/:id',
                 element: <PrivetRoute><View /></PrivetRoute>
+            },
+            {
+                path: '/profile',
+                element: <PrivetRoute><ProfileInfo /></PrivetRoute>
             },
         ]
     }
